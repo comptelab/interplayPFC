@@ -1,0 +1,211 @@
+from __future__ import division
+from matplotlib.pylab import *
+import glob
+from pickle import load
+import seaborn as sns
+from matplotlib  import gridspec
+import bz2
+
+def despine(ax,top=False,right=False,bottom=True,left=True):
+    ax.spines["top"].set_visible(top)
+    ax.spines["right"].set_visible(right)
+    ax.spines["bottom"].set_visible(bottom)
+    ax.spines["left"].set_visible(left)
+
+# set_printoptions(precision=4)
+sns.set_context("talk", font_scale=1.3)
+sns.set_style("ticks")
+
+w= 8
+fig=figure(figsize=(3*w,0.75*w))
+
+
+
+#G = gridspec.GridSpec(3, 8, hspace=0.25,wspace=0.25)
+G1 = gridspec.GridSpec(3, 3)
+G1.update(left=0+0.05, right=2/7., wspace=0.5)
+ax_tuning = subplot(G1[:2, :3])
+
+ax_tuning_single1 = subplot(G1[2,0])
+ax_tuning_single2 = subplot(G1[2,1])
+ax_tuning_single3 = subplot(G1[2,2])
+
+G2 = gridspec.GridSpec(3, 2)
+G2.update(left=2/7.+0.05, right=3.5/7., bottom=0.3, hspace=0.05)
+
+ax_rep = subplot(G2[0,0])
+ax_att = subplot(G2[0,1])
+
+ax_xcorr = subplot(G2[:,:])
+
+G3 = gridspec.GridSpec(3, 2, hspace=0.25,wspace=0.75)
+G3.update(left=3.5/7.+0.05, right=4.75/7, hspace=0.05)
+
+
+ax_serial_b = subplot(G3[:2,:2])
+
+
+
+colors=[sns.xkcd_rgb["greenish"],"darkblue","black"]
+labels= ["weak drive","strong drive", "no drive"]
+
+lw=2
+
+f=open("preprocessed_data/sbias_model.pickle")
+[xxx,M,S]= load(f)
+
+for mi,m_err in enumerate(M):
+    std_err=S[mi]  
+    ax_serial_b.plot(xxx,m_err,color=colors[mi],lw=lw*1.5)
+    ax_serial_b.plot(xxx,zeros(len(xxx)),"k--",alpha=0.3,lw=2)  
+
+
+ax_serial_b.set_xlabel("relative location of \n" r"previous trial ($^\circ$)")
+ax_serial_b.set_ylabel(r"error in current trial ($^\circ$)")
+ax_serial_b.set_xticks([30,90,150])
+ax_serial_b.set_xlim((xxx[0],150))
+ax_serial_b.tick_params(direction='in')
+ax_serial_b.set_ylim([-1.5,3])
+
+
+despine(ax_serial_b)
+
+delay_color = color=sns.xkcd_rgb["pale red"]
+iti_color = color=sns.xkcd_rgb["deep blue"]
+reg_color = color=sns.xkcd_rgb["orange"]
+
+f = bz2.BZ2File('preprocessed_data/agregated_sims_4_fig.pickle.bz2')
+[nsims,time,timings,tuning,stims,files,decs,[delay_tc,iti_tc,reg_tc]] = load(f)
+[tc_start,tc_dur,i_cue_ang,t_delay,reset_start,reset_stop, restart_start,restart_stop] = timings
+
+
+f = bz2.BZ2File('preprocessed_data/agregated_sims_4_fig_ux.pickle.bz2')
+[stims,ux]=load(f)
+
+
+NE=2048
+sec_cue_start=restart_stop
+sec_cue_stop = sec_cue_start+tc_dur
+simtime     =sec_cue_stop + t_delay
+
+
+w1=0.05
+w2=3*w1
+
+time_u = linspace(0,simtime,len(ux[0]))
+
+
+delta = 300
+
+reg = 65
+delay = 20
+iti = 50
+
+
+w=2
+for tc in [reg_tc,delay_tc,iti_tc]:
+	for beg in range(len(reg_tc[0])):
+		end = beg + w
+		tc[:,beg] = mean(tc[:,beg:end],1)
+
+zero = (delta*2 - w) / 2
+x_tc = arange(len(reg_tc[0])) - zero
+
+x_tc = x_tc / NE * 360
+zero = zero / NE * 360
+
+
+ax_tuning_single1.plot(x_tc,mean(delay_tc,0),lw=4,color=delay_color)
+ax_tuning_single1.plot(x_tc,zeros(len(x_tc)),"k--",alpha=0.3,lw=2)  
+ax_tuning_single1.set_yticks([-5,0,5])
+ax_tuning_single1.set_xticks([-50,0,50])
+ax_tuning_single1.set_xlabel("degrees")
+ax_tuning_single1.set_ylim(-5,5)
+ax_tuning_single1.set_xlim(-50,50)
+ax_tuning_single1.tick_params(direction='in')
+ax_tuning_single1.set_ylabel("rate tuning")
+
+ax_tuning_single2.plot(x_tc,mean(iti_tc,0),lw=4,color=iti_color)
+ax_tuning_single2.plot(x_tc,zeros(len(x_tc)),"k--",alpha=0.3,lw=2)  
+ax_tuning_single2.set_ylim(-1,1)
+ax_tuning_single2.set_xlim(-50,50)
+ax_tuning_single2.tick_params(direction='in')
+
+ax_tuning_single3.plot(x_tc,mean(reg_tc,0),lw=4,color=reg_color)
+ax_tuning_single3.plot(x_tc,zeros(len(x_tc)),"k--",alpha=0.3,lw=2)  
+ax_tuning_single3.set_ylim(-1,1)
+ax_tuning_single3.set_xlim(-50,50)
+ax_tuning_single3.tick_params(direction='in')
+
+despine(ax_tuning_single1,top=False,right=False,bottom=True,left=True)
+despine(ax_tuning_single2,top=False,right=False,bottom=True,left=True)
+despine(ax_tuning_single3,top=False,right=False,bottom=True,left=True)
+
+ax_tuning_single1.set_yticks([-5,0,5])
+ax_tuning_single2.set_yticks([-1,0,1])
+ax_tuning_single3.set_yticks([-1,0,1])
+
+
+ax_tuning.plot(time,mean(tuning,1),lw=3,color="k")
+err = std(tuning,1)/sqrt(nsims)
+ax_tuning.fill_between(time,mean(tuning,1) - err,mean(tuning,1) + err,alpha=0.3,color="black")
+ax_tuning.plot(time,zeros(len(time)),"k--",alpha=0.3,lw=2)  
+ax_tuning.fill_between([restart_start,restart_stop],[-0.5,-0.5],[-1.5,-1.5],alpha=0.5,color=sns.xkcd_rgb["greenish"], label="drive")
+ax_tuning.fill_between([sec_cue_start,sec_cue_stop],[0,0],[60,60],alpha=0.3,color="gray",label="cue",)
+ax_tuning.fill_between([tc_start,tc_start+tc_dur],[0,0],[60,60],alpha=0.3,color="gray")
+ax_tuning.plot(time[delay+10],-5,"^",color=delay_color,ms=20)
+ax_tuning.plot(time[iti],-5,"^",color=iti_color,ms=20)
+ax_tuning.plot(time[reg],-5,"^",color=reg_color,ms=20)
+ax_tuning.legend(loc="best")
+ax_tuning.set_yticks([0,50])
+ax_tuning.set_ylabel("rate tuning (sp/s)")
+ax_tuning.set_xlabel("time")
+ax_tuning.set_ylim(-10,50)
+ax_tuning.set_xlim(1,4)
+ax_tuning.fill_between([2,3],[5,5],[7,7],color="black")
+despine(ax_tuning)
+
+
+w1=0.05
+w2=3*w1
+
+ax_tuning_u = ax_tuning.twinx()
+
+time_u = time_u - w2
+ax_tuning_u.plot(time_u,mean(ux,0),color=sns.xkcd_rgb["petrol"],lw=3)
+err = std(ux,0)/sqrt(len(ux))
+ax_tuning_u.fill_between(time_u,mean(ux,0) - err,mean(ux,0) + err,alpha=0.3,color=sns.xkcd_rgb["petrol"])
+
+ax_tuning_u.set_yticks([0,1])
+ax_tuning_u.set_xticks([])
+ax_tuning_u.set_ylabel("synaptic tuning (a.u.)")
+ax_tuning_u.set_xlabel("time (sec)")
+ax_tuning_u.set_ylim(-0.1,1)
+ax_tuning_u.set_xlim(1,4)
+ax_tuning_u.spines['right'].set_color(sns.xkcd_rgb["petrol"])
+ax_tuning_u.tick_params(axis='y',color=sns.xkcd_rgb["petrol"])
+ax_tuning_u.yaxis.label.set_color(sns.xkcd_rgb["petrol"])
+ax_tuning_u.yaxis.label.set_color(sns.xkcd_rgb["petrol"])
+
+
+f = open("preprocessed_data/xcross_sim.pickle")
+[xxx,in_c,out_c]= load(f)
+ax_xcorr.plot(xxx,mean(in_c,0),color="darkblue",lw=2);
+ax_xcorr.plot(xxx,mean(out_c,0),color="k",ls="--",label="anti-pref");
+ax_xcorr.plot(xxx,zeros(len(xxx)),"k--",alpha=0.3)  
+ax_xcorr.fill_between(xxx,mean(in_c,0)-std(in_c,0)/sqrt(len(in_c)),mean(in_c,0)+std(in_c,0)/sqrt(len(in_c)),color="darkblue",alpha=0.25,label="pref")
+ax_xcorr.fill_between(xxx,mean(out_c,0)-std(out_c,0)/sqrt(len(out_c)),mean(out_c,0)+std(out_c,0)/sqrt(len(out_c)),color="gray",alpha=0.2)
+ax_xcorr.set_xlim(-75,75)
+ax_xcorr.set_xticks([-75,0,75])
+ax_xcorr.set_xlabel("lag (ms)")
+ax_xcorr.set_ylabel("x-corr")
+ax_xcorr.legend(frameon=False)
+ax_xcorr.set_yticks([-1,0,1,2])
+ax_xcorr.set_ylim(-1,2)
+ax_xcorr.tick_params(direction='in')
+despine(ax_xcorr)
+
+
+tight_layout()
+show()
+
