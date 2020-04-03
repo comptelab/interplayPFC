@@ -1,3 +1,3 @@
 # interplayPFC
 
-The data for these experiments can be downloaded from [the CRCNS.org website](http://here.goes.the.link) (for monkeys), from the OSF repository (for human EEG) and from the OSF repository (for human TMS).
+The data for these experiments can be downloaded from [a CRCNS.org repository](http://here.goes.the.link) (for monkeys), from [an OSF repository](http://here.goes.the.link) (for human EEG) and from [an OSF repository](http://here.goes.the.link) (for human TMS).
