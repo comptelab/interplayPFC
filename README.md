@@ -11,7 +11,7 @@ We include here the Python codes that produce each of the main figures in this a
 
 # Scripts
 Each figure folder contains 3 files:
-- plot_figure.py:
+## plot_figure.py:
 
 This file loads preprocessed files from the preprocessed_data and generates the final figure.
 Statistics are usually done in this script, but might be done in a previous preprocessing state too (see below).
