@@ -34,5 +34,5 @@ Preprocessed data is saved in the preprocessed_data folder.
 If you have any questions, please write to the corresponding author Albert Comte [:envelope:](mailto:ACOMPTE@clinic.cat), to Joao Barbosa [:envelope:](mailto:palerma@gmail.com) (monkey & TMS code), or Heike Stein [:envelope:](heike.c.stein@gmail.com) (human EEG code).
 
 <a class="twitter-follow-button"
-  href="https://twitter.com/TwitterDev">
-Follow @TwitterDev</a>
+  href="https://twitter.com/jmourabarbosa">
+Follow @jmourabarbosa</a>
