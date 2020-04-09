@@ -1,0 +1,9 @@
+DISCLAIMER: If this code is run sequentially can be *really* slow.
+
+This code was created to run on a cluster, each pair on a separated nodes (w/ several CPU's each): 
+This made everything very fast for us, because we had #nodes >> #pairs.
+
+# example
+$ python xcorr_for_1_pair.py 1 # generates a pickle file for 1 pair
+$ python plot_single_pairs.py xcorr_pairs/ # plot xcorr and fr selectivity like in the paper
+
