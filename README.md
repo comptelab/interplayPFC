@@ -9,25 +9,24 @@ We include here the Python codes that produce each of the main figures in this a
 
 [Data](https://github.com/comptelab/interplayPFC/tree/master/Data) folder constains raw or minimaly processed data. If you need less preprocessed data, please contact Christos Constantinidis (cconstan@wakehealth.edu) for monkey data or Heike Stein (heike.c.stein@gmail.com) for human EEG data.
 
-# Scripts
+# Figure Scripts
 Each figure folder contains 3 files:
-## plot_figure.py:
+### plot_figure.py:
 
 This file loads preprocessed files from the preprocessed_data and generates the final figure.
 Statistics are usually done in this script, but might be done in a previous preprocessing state too (see below).
 
-- preprocessed_data/
+### preprocessed_data/
  
 This folder contains all the preprocessed data used by the plot_figure.py file.
 
-- preprocess_scripts/
+### preprocess_scripts/
 
 This folder contains all the scripts that generate preprocessed data from the raw data in Data/ folder.
 Preprocessed data is saved in the preprocessed_data folder.
 
+# Models
 [serial_bias_models/](https://github.com/comptelab/interplayPFC/tree/master/serial_bias_models) contains 2 versions of the serial bias model. 1 with untuned inhibition and another with tuned inhibition.
-
-[helpers/] (https://github.com/comptelab/interplayPFC/tree/master/helpers) miscellaneous scripts (circular statistics, bootstrap test, etc)
 
 # Contact
 If you have any questions, please write to the corresponding author, Albert Comte (ACOMPTE@clinic.cat), to Joao Barbosa, (palerma@gmail.com, monkey & TMS code), or Heike Stein (heike.c.stein@gmail.com, human EEG code)
