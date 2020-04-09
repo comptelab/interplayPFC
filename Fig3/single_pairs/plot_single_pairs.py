@@ -70,22 +70,6 @@ def exact_mc_perm_test(xs, ys, nmc):
 
 
 
-# load firing rate (window of 0.25 s)
-files = glob(sys.argv[1]+"/*0.25*npz")
-idx = [int(f.split("pair_")[1].split("_")[0]) for f in files]
-files = array(files)[argsort(idx)]
-
-res = []
-for file in files:
-    data,time = np.load(file, allow_pickle=True)["arr_0"]
-    data_no_spikes = data 
-    res.append(data_no_spikes)
-
-res = array(res)
-spikes_anti = array([[mean(sum(n[t][-1],-1)) for n in res] for t in range(len(time))])
-spikes_on = array([[mean(sum(n[t][-2],-1)) for n in res] for t in range(len(time))])
-spikes_diff = array([[mean(sum(n[t][-2],-1)) - mean(sum(n[t][-1],-1)) for n in res] for t in range(len(time))])
-
 # load correlations rate (window of 1 s)
 files = glob(sys.argv[1]+"/*1.00*npz")
 idx = [int(f.split("pair_")[1].split("_")[0]) for f in files]
@@ -97,6 +81,12 @@ for file in files:
     res.append(data_no_spikes)
 
 res = array(res)
+
+# load firing rate 
+spikes_anti = array([[mean(sum(n[t][-1],-1)) for n in res] for t in range(len(time))])
+spikes_on = array([[mean(sum(n[t][-2],-1)) for n in res] for t in range(len(time))])
+spikes_diff = array([[mean(sum(n[t][-2],-1)) - mean(sum(n[t][-1],-1)) for n in res] for t in range(len(time))])
+
 
 ## PLOTTING
 x_axis_len = shape(res[0][0][0])[1]
@@ -199,10 +189,10 @@ l.legendHandles[1].set_visible(False);
 
 subplot(1,2,2)
 title("rate tuning")
-mean_e = mean((spikes_diff[:,pos_idx]),1)*4
-mean_i = mean((spikes_diff[:,neg_idx]),1)*4
-std_e = 2*sem((spikes_diff[:,pos_idx])*4,1)
-std_i = 2*sem((spikes_diff[:,neg_idx])*4,1)
+mean_e = mean((spikes_diff[:,pos_idx]),1)
+mean_i = mean((spikes_diff[:,neg_idx]),1)
+std_e = 2*sem((spikes_diff[:,pos_idx]),1)
+std_i = 2*sem((spikes_diff[:,neg_idx]),1)
 
 low_e_t = mean_e - std_e
 high_e_t = mean_e + std_e
@@ -214,16 +204,18 @@ fill_between(time,low_e_t,high_e_t,color=sns.xkcd_rgb["orange"], alpha=0.25)
 plot(time,mean_e,color=sns.xkcd_rgb["orange"])
 
 fill_between(time,low_i_t,high_i_t,color=sns.xkcd_rgb["greenish"], alpha=0.25)
-plot(time+0.25,mean_i,color=sns.xkcd_rgb["greenish"])
+plot(time,mean_i,color=sns.xkcd_rgb["greenish"])
 
 plot(time,zeros(len(time)),"k--")
-fill_between([0,0.5],-1,7,color="gray",alpha=0.2)
+fill_between([fixoff,fixoff+.35],-5,7,color="gray",alpha=0.2)
+fill_between([0,0.5],-5,7,color="gray",alpha=0.2)
 ylabel("sp/s")
 xlabel("time (s)")
 
 tick_params(direction='in')
 legend(frameon=False,loc="lower right")
 xlim(-4.5,1)
+ylim(-2.5,5)
 tight_layout()
 sns.despine()
 
