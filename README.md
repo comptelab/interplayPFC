@@ -7,7 +7,7 @@ We include here the Python codes that produce each of the main figures in this a
 
 # Data 
 
-[Data](https://github.com/comptelab/interplayPFC/tree/master/Data) folder constains raw or minimaly processed data. If you need less preprocessed data, please contact Christos Constantinidis (cconstan@wakehealth.edu) for monkey data or Heike Stein (heike.c.stein@gmail.com) for human EEG data.
+[Data](https://github.com/comptelab/interplayPFC/tree/master/Data) folder constains raw or minimaly processed data. If you need less preprocessed data, please contact Christos Constantinidis [:envelope:](mailto:cconstan@wakehealth.edu) for monkey data or Heike Stein [:envelope:](mailto:heike.c.stein@gmail.com) for human EEG data.
 
 # Figure Scripts
 Each figure folder contains 3 files:
@@ -29,4 +29,4 @@ Preprocessed data is saved in the preprocessed_data folder.
 [serial_bias_models](https://github.com/comptelab/interplayPFC/tree/master/serial_bias_models) contains 2 versions of the serial bias model. 1 with untuned inhibition and another with tuned inhibition ([see Fig S4](https://www.biorxiv.org/content/biorxiv/early/2019/09/12/763938/DC1/embed/media-1.pdf)).
 
 # Contact
-If you have any questions, please write to the corresponding author, Albert Comte (ACOMPTE@clinic.cat), to Joao Barbosa, (palerma@gmail.com, monkey & TMS code), or Heike Stein (heike.c.stein@gmail.com, human EEG code)
+If you have any questions, please write to the corresponding author, Albert Comte [:envelope:](mailto:ACOMPTE@clinic.cat), to Joao Barbosa, [:envelope:](mailto:palerma@gmail.com, monkey & TMS code), or Heike Stein (heike.c.stein@gmail.com, human EEG code)
