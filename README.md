@@ -11,9 +11,9 @@ We include here the Python codes that produce each of the main figures in this a
 
 If you need less preprocessed data, please contact:
 
-[:envelope:](mailto:cconstan@wakehealth.edu) Christos Constantinidis, for :monkey: data
+[Christos Constantinidis](mailto:cconstan@wakehealth.edu) for :monkey: data
 
-[:envelope:](mailto:heike.c.stein@gmail.com), Heike Stein for :girl: EEG data.
+[Heike Stein](mailto:heike.c.stein@gmail.com)  for :girl: EEG data.
 
 # Figure Scripts
 Each figure folder contains 3 files:
