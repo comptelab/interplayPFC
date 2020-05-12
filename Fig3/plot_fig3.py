@@ -84,6 +84,13 @@ fig=figure(figsize=(13,18))
 subplot(2,2,1)
 f=open("preprocessed_data/xcorr_time_1.00.pickle")
 [time,on_pref,out_pref,pos_idx,neg_idx] = load(f)
+
+dist_elect = loadtxt("preprocessed_data/dist_elect.txt")
+
+# select only pairs that do not come from the same electrode
+#pos_idx = pos_idx & (dist_elect > 0)
+#neg_idx = neg_idx & (dist_elect > 0)
+
 ccsi=on_pref-out_pref
 
 errorbar(array([0, 1])-0.03, [mean(ccsi[pos_idx,time_silent]), mean(ccsi[pos_idx,time_react])], yerr=[sem(ccsi[pos_idx,time_silent]), sem(ccsi[pos_idx,time_react])], color=sns.xkcd_rgb["orange"])
