@@ -44,9 +44,7 @@ lw=4
 
 nneurons = len(data)
 W1=0.1
-W2_tc = 0.3 #0.25 #.55
-#W2_tc = 0.5
-#W2_tc = float(sys.argv[1])
+W2_tc = 0.3 
 
 xx=arange(-9,5-W2_tc+W1,W1)
 
@@ -101,10 +99,6 @@ t1=72
 t2=95
 t3=85
 
-# t0=60
-# t1=73
-# t2=95
-# t3=85
 
 f=open("../preprocessed_data/tuning_tcfix2.pickle","w")
 dump(TC_FIX2,f)
