@@ -9,7 +9,7 @@ We include here the Python codes that produce each of the main figures in this a
 
 [Data](https://github.com/comptelab/interplayPFC/tree/master/Data) folder constains raw or minimaly processed data. 
 
-If you need less preprocessed data, please contact [Christos Constantinidis](mailto:cconstan@wakehealth.edu) for :monkey: data or [Heike Stein](mailto:heike.c.stein@gmail.com)  for :girl: EEG data.
+If you need less preprocessed data, please contact [Christos Constantinidis](mailto:cconstan@wakehealth.edu) for :monkey:  data or [Heike Stein](mailto:heike.c.stein@gmail.com)  for :girl:  EEG data.
 
 # Figure Scripts
 Each figure folder contains 3 files:
